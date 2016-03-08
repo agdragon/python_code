@@ -1,0 +1,12 @@
+
+/qrcode
+/index.wsgi.space.py
+/dev_server.py
+*.pyc
+*.swp
+/chardet
+*.swo
+*.wsgic
+/²Î¿¼
+/static/robots.txt
+*.wsgic
