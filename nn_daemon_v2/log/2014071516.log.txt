@@ -1,2 +1,0 @@
-2014-07-15 16:52:39 - INFO - VERSION:1.0.0 begin run
-2014-07-15 16:52:39 - INFO - get all task:
