@@ -9,12 +9,14 @@
 import sys,os
 import ConfigParser
 
+# print os.path.join(os.getcwd(), "token_conf.conf")
+
 if __name__ == "__main__":
     config_file_path = "db_config.ini"
     
     while  1:
         cf = ConfigParser.ConfigParser()
         cf.read(config_file_path)
-        db_host = cf.get("baseconf","host")
+        db_host = cf.get("test","host")
     
-        print db_host
+        print cf.get("test","port")
