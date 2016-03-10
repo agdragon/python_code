@@ -14,7 +14,7 @@
 <br>
 
 
-* ####普通实现:
+* ####普通实现：
     在绑定属性时，如果我们直接把属性暴露出去，虽然写起来很简单，但是，没办法检查参数，导致可以把成绩随便改：
         ```
         s = Student()
@@ -35,11 +35,13 @@
         ```        
     现在，对任意的Student实例进行操作，就不能随心所欲地设置score了：
         ```
-        >>> s = Student()
-        >>> s.set_score(60) # ok!
-        >>> s.get_score()
+        s = Student()
+        s.set_score(60) # ok!
+        s.get_score()
+        
         60
-        >>> s.set_score(9999)
+        
+        s.set_score(9999)
         Traceback (most recent call last):
           ...
         ValueError: score must between 0 ~ 100!
@@ -68,11 +70,13 @@
         ```
     `@property`的实现比较复杂，我们先考察如何使用。把一个`getter`方法变成属性，只需要加上`@property`就可以了，此时，`@property`本身又创建了另一个装饰器`@score.setter`，负责把一个`setter`方法变成属性赋值，于是，我们就拥有一个可控的属性操作：
         ```
-        >>> s = Student()
-        >>> s.score = 60 # OK，实际转化为s.set_score(60)
-        >>> s.score # OK，实际转化为s.get_score()
+        s = Student()
+        s.score = 60 # OK，实际转化为s.set_score(60)
+        s.score # OK，实际转化为s.get_score()
+        
         60
-        >>> s.score = 9999
+        
+        s.score = 9999
         Traceback (most recent call last):
           ...
         ValueError: score must between 0 ~ 100!
@@ -95,9 +99,6 @@
                 return 2014 - self._birth
         ```
     上面的`birth`是可读写属性，而`age`就是一个只读属性，因为`age`可以根据`birth`和当前时间计算出来。
-
-
-
 
 
 * ####结论：
