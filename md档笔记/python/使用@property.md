@@ -8,7 +8,7 @@
 
 * 目录：
     * [普通实现](#user-content-普通实现)
-    * [property出场](#user-content-property出场)
+    * [装饰器property](#user-content-装饰器property)
     * [结论](#user-content-结论)
 
 <br>
@@ -45,14 +45,14 @@
         Traceback (most recent call last):
           ...
         ValueError: score must between 0 ~ 100!
-    ```
+        ```
     但是，上面的调用方法又略显复杂，没有直接用属性这么直接简单。
 
     有没有既能检查参数，又可以用类似属性这样简单的方式来访问类的变量呢？对于追求完美的`Python`程序员来说，这是必须要做到的！
 
 
 
-* ####property出场：
+* ####装饰器property：
     还记得装饰器`(decorator)`可以给函数动态加上功能吗？对于类的方法，装饰器一样起作用。`Python`内置的`@property`装饰器就是负责把一个方法变成属性调用的：
         ```
         class Student(object):
