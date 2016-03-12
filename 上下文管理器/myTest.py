@@ -13,5 +13,6 @@ class VOW(object):
 
 with VOW("I'm fine") as myvow:
     print(myvow.text)
+    print "xxxxxxxxxxxxx"
 
 print(myvow.text)
