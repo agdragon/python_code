@@ -20,3 +20,7 @@ b()
 print "**********************"
 print a.func_closure
 print b.func_closure
+
+print "**********************"
+print a
+print b

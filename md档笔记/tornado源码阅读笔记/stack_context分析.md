@@ -49,7 +49,7 @@
             def do_cb():
                 raise ValueException()
 
-            wrap(do_async(callback=wrap(do_cb)))
+        wrap(do_async(callback=wrap(do_cb)))
 
 * ####tornado的解决方法：
 
