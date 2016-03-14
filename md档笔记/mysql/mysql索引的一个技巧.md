@@ -13,7 +13,7 @@ mysql索引的一个技巧
 
  
 * ####文章：
-    针对
+    针对一下`sql`语句:
 
     	`select * from table where col1 > number order by col2 desc`。
 
