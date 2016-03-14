@@ -9,37 +9,44 @@
 
 
 import threading
+import time
 from RWLock import RWLock
 
 _caches = {}
 _locks = {}
 
+name = "data"
+
+cache = _caches.setdefault(name, {})
+lock = _locks.setdefault(name, RWLock())
 
 
-def write_data(cache, lock):
-    with lock.writer():
-    	print "write_data..."
+def write_data(key, data):
+	with lock.writer():
+		cache[key] = data
 
-def read_data(cache, lock):
-    pass
+def read_data(key):
+	with lock.reader():
+		print cache[key]
+		print cache
 
-
-def main(name):
-	cache = _caches.setdefault(name, {})
-	lock = _locks.setdefault(name, RWLock())
+def main():
+	key = "key"
+	data = {
+		"a":1
+	}
 
 	threads = []
-	t1 = threading.Thread(target=write_data, args=(cache, lock,))
+	t1 = threading.Thread(target=write_data, args=(key, data,))
 	threads.append(t1)
 	
-	t2 = threading.Thread(target=read_data, args=(cache, lock,))
+	t2 = threading.Thread(target=read_data, args=(key,))
 	threads.append(t2)
 
 	for t in threads:
-		# t.setDaemon(True)
 		t.start()
 
 
 
 if __name__ == '__main__':
-	main("xds")
+	main()
