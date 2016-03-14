@@ -13,13 +13,11 @@ from contextlib import closing
 @contextmanager
 def make_context() :
     print 'enter'
-    try :
-        yield {}
-    except RuntimeError, err :
-        print 'error' , err
-    finally :
-        print 'exit'
-  
+    
+    yield {}
+    
+    print 'exit'
+
 with make_context() as value :
     print value
 '''
@@ -28,6 +26,8 @@ with make_context() as value :
 		{}
 		exit
 '''
+
+print "************************"
 
 
 '''
