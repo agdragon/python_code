@@ -79,44 +79,44 @@ class Application(tornado.web.Application):
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()
-    # app = tornado.web.Application([
-    #         url(r"/sleep", SleepHandler),
-    #         url(r"/justnow", JustNowHandler),
-    #         url(r"/", MainHandler),
-    #         url(r"/story/([0-9]+)", StoryHandler, dict(db="db"), name="story")
-    #         ])
+    app = tornado.web.Application([
+            url(r"/sleep", SleepHandler),
+            url(r"/justnow", JustNowHandler),
+            url(r"/", MainHandler),
+            url(r"/story/([0-9]+)", StoryHandler, dict(db="db"), name="story")
+            ])
 
-    # print "#"*20
-    # tmp = app.handlers[0][1][1]
-    # print type(tmp)
-    # print tmp
+    print "#"*20
+    tmp = app.handlers[0][1][1]
+    print type(tmp)
+    print tmp
     
-    # print "#"*20
+    print "#"*20
 
-    # app.add_handlers(r"^a\.com$", [(r"/", DomainHandler),])
+    app.add_handlers(r"^a\.com$", [(r"/", DomainHandler),])
     
-    # print "#"*20
-    # host_handlers = [(r"/", DomainHandler),]
-    # print host_handlers
-    # for spec in host_handlers:
-    #     if isinstance(spec, (tuple, list)):
-    #         assert len(spec) in (2, 3, 4)
-    #         spec = URLSpec(*spec)
-    # print host_handlers
-    # print spec
-    # print "#"*20
+    print "#"*20
+    host_handlers = [(r"/", DomainHandler),]
+    print host_handlers
+    for spec in host_handlers:
+        if isinstance(spec, (tuple, list)):
+            assert len(spec) in (2, 3, 4)
+            spec = URLSpec(*spec)
+    print host_handlers
+    print spec
+    print "#"*20
 
 
 
     # PeriodicCallback(test_1, 1000).start()
 
-    tmp = tornado.ioloop.IOLoop.instance().time()
-    print tmp
-    tt = tornado.ioloop.IOLoop.instance().add_timeout(tmp + 5, test_2)
+    # tmp = tornado.ioloop.IOLoop.instance().time()
+    # print tmp
+    # tt = tornado.ioloop.IOLoop.instance().add_timeout(tmp + 5, test_2)
     
-    print "××××××××××××××××××××××××"
-    print tt
-    print type(tt)
+    # print "××××××××××××××××××××××××"
+    # print tt
+    # print type(tt)
 
 
     http_server = tornado.httpserver.HTTPServer(Application())
