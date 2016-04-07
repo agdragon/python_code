@@ -1,0 +1,97 @@
+创建卡券json
+{ 
+  "card": {
+    "card_type": "GROUPON",
+    "groupon": {
+        "base_info": {
+            "logo_url": "http://mmbiz.qpic.cn/mmbiz/UJjBZG4baCucImullOPQWIicdu1OsiaATlOgFJnuMTSpvhW75uI4LIW7Cia2xVcicsV8v3rY0C3qAxThsdlWH0rF8Q/0",
+            "brand_name":"测试卡券",
+            "code_type":"CODE_TYPE_TEXT",
+            "title": "牛逼耳机dsa不要钱",
+            "sub_title": "周末狂欢必备",
+            "color": "Color010",
+            "notice": "使用时向服务员出示此券",
+            "service_phone": "020-88887888",
+            "description": "不可与其他优惠同享\n如需团购券发票，请在消费时向商户提出\n店内均可使用，仅限堂食",
+            "date_info": {
+                "type": "DATE_TYPE_FIX_TIME_RANGE",
+                "begin_timestamp": 1397577600,
+                "end_timestamp": 1472724261
+            },
+            "sku": {
+                "quantity": 500000
+            },
+            "get_limit": 3,
+            "use_custom_code": false,
+            "bind_openid": false,
+            "can_share": true,
+          "can_give_friend": true,
+            "location_id_list" : [123, 12321, 345345],
+            "custom_url_name": "立即使用",
+            "custom_url": "http://www.qq.com",
+            "custom_url_sub_title": "6个汉字tips",
+            "promotion_url_name": "更多优惠",
+          "promotion_url": "http://www.qq.com",
+            "source": "大众点评"   
+        },
+        "deal_detail": "以下锅底2选1（有菌王锅、麻辣锅、大骨锅、番茄锅、清补凉锅、酸 菜鱼锅可选）：\n大锅1份 12元\n小锅2份 16元 "}
+  }
+}
+
+
+
+创建自定义菜单json
+{
+    "button": [
+        {
+            "name": "买点乐子", 
+            "type": "view", 
+            "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx15504522b56394c4&redirect_uri=http%3a%2f%2fwww.luchong.me%2fweixinLogin&response_type=code&scope=snsapi_userinfo#wechat_redirect/"
+        },
+        {
+            "name": "Pietro玩中国", 
+            "sub_button": [
+                {
+                    "type": "click", 
+                    "name": "#作乐中国#实时直播", 
+                    "key": "livekey"
+                }, 
+                {
+                    "type": "click", 
+                    "name": "#作乐中国#微信群实时互动", 
+                    "key": "interactionkey"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "Pietro#作乐中国#直播行程", 
+                    "url": "http://www.besound.cn/journey/"
+                },
+                {
+                    "type": "click", 
+                    "name": "全球最帅数学老师", 
+                    "key": "ourteacher"
+                }
+            ]
+        },
+        {
+            "name": "BESOUND", 
+            "sub_button": [
+                {
+                    "type": "click", 
+                    "name": "公司介绍", 
+                    "key": "companyintroduction"
+                }, 
+                {
+                    "type": "click", 
+                    "name": "联系我们", 
+                    "key": "connectus"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "BESOUND ARMY", 
+                    "url": "http://www.besound.cn/journey/"
+                }, 
+            ]
+        }
+    ]
+}
