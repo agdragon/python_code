@@ -9,7 +9,7 @@ gevent是一个基于协程的python网络库。
 * 目录：
     * [greenlet概述](#user-content-greenlet概述)
     * [父greenlet](#user-content-父greenlet)
-    * [结论](#user-content-结论)
+    * [greenlet实例化](#user-content-greenlet实例化)
 
 <br>
 
@@ -66,6 +66,9 @@ gevent是一个基于协程的python网络库。
     未捕获的异常会传递给父`greenlet`。如果上面的`test2`包含一个打印错误,会生成一个`NameError`而杀死`gr2`,然后异常被传递回主`greenlet`。`traceback`会显示`test2`而不是`test1`。记住,切换不是调用，而是执行点在并行的栈容器间交换，而父`greenlet`定义了这些栈之间的先后关系。
 
 
-* ####结论：
-    `@property`广泛应用在类的定义中，可以让调用者写出简短的代码，同时保证对参数进行必要的检查，这样，程序运行时就减少了出错的可能性。
+* ####greenlet实例化：
+    `greenlet(run=None, parent=None)`:
+
+    创建一个`greenlet`对象,不执行。`run`是这个`greenlet`要执行的回调函数,而`parent`是父`greenlet`,缺省为当前`greenlet`。
+
 
