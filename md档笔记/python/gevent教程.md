@@ -134,4 +134,4 @@ gevent是一个基于协程的python网络库。
 
     注意:`gevent`中并没有`greenlet`链的说法,所有都是向主循环注册`greenlet.switch`方法,主循环在合适的时机切换回来.
 
-    ![gevent执行流程](http://img.blog.csdn.net/20140424214144156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveXVlZ3VhbmdoYWlkYW8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+    ![gevent执行流程](http://img2.ph.126.net/J6-XDpFxBjpsaThULXepzg==/2872733612409913241.jpg)
