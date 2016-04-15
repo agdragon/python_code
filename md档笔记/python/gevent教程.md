@@ -142,7 +142,9 @@ gevent是一个基于协程的python网络库。
     ![gevent执行流程](http://img2.ph.126.net/J6-XDpFxBjpsaThULXepzg==/2872733612409913241.jpg)
 
 * ####gevent之hub：
-    pass
+    `gevent`中有一个`hub`的概念,也就是上图的`MainThread`,用于调度所有其它的`greenlet`实例(上图`Coroutine`).
+
+    其实`hub`也是一个`greenlet`,只不过特殊一些.hub即是主协程.
 
 * ####gevent之spawn：
     `gevent.spawn`其实就是`Greenlet.spawn(foo)`,所以`gevent.spawn`就是创建一个`greenlet`,并将该`greenlet`的`switch()`加入`hub`主循环回调.效果类似于`gevent.Greenlet(foo).start`
