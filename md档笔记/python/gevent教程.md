@@ -21,8 +21,6 @@ gevent是一个基于协程的python网络库。
     
     代码示例:
 
-        ```
-            
             #!/usr/bin/python
             #coding=utf-8
 
@@ -42,15 +40,13 @@ gevent是一个基于协程的python网络库。
                 gr1 = greenlet(test1)
                 gr2 = greenlet(test2)
                 gr1.switch()
-        ```
 
     结果:
 
-        ```
             12
             56
             34
-        ```
+
 
     代码分析:
 
