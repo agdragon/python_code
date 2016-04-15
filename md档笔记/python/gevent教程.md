@@ -12,6 +12,9 @@ gevent是一个基于协程的python网络库。
     * [greenlet实例化](#user-content-greenlet实例化)
     * [在greenlets间切换](#user-content-在greenlets间切换)
     * [垂死的greenlet](#user-content-垂死的greenlet)
+    * [gevent概述](#user-content-gevent概述)
+    * [gevent的调度流程](#user-content-gevent的调度流程)
+    
 
 
 <br>
@@ -58,7 +61,6 @@ gevent是一个基于协程的python网络库。
         2: test1 打印 12 ,然后跳转到 test2 ,打印 56 ,然后跳转回 test1 ,打印 34 ,最后 test1 结束执行, gr1 死掉。这时执行会回到最初的 gr1.switch() 调用。
 
         3: 注意: 78 是不会被打印的。
-
 
 
 * ####父greenlet：
@@ -119,4 +121,15 @@ gevent是一个基于协程的python网络库。
 
     除了上面的情况外,目标`greenlet`会接收到发送来的对象作为`switch()`的返回值.虽然`switch()`并不会立即返回,但是它仍然会在未来某一点上返回,当其他`greenlet`切换回来时.当这发生时,执行点恢复到`switch()`之后,而`switch()` 返回刚才调用者发送来的对象.这意味着`x=g.switch(y)` 会发送对象`y`到`g`,然后等着一个不知道是谁发来的对象,并在这里返回给`x`。
 
-    注意，任何尝试切换到死掉的`greenlet`的行为都会切换到死掉`greenlet`的父`greenlet`,或者父的父,等等。最终的父就是`main greenlet`,永远不会死掉的。
+    注意，任何尝试切换到死掉的`greenlet`的行为都会切换到死掉`greenlet`的父`greenlet`,或者父的父,等等。最终的父就是`main greenlet`,永远不会死掉的
+
+* ####gevent概述：
+    `gevent`是一个高性能网络库,底层是`libevent`,`1.0`版本之后是`libev`,核心是`greenlet`.`gevent`和`eventlet`是亲近,唯一不同的是`eventlet`是自己实现的事件驱动,而`gevent`是使用`libev`.两者都有广泛的应用,如`openstack`底层网络通信使用`eventlet`,`goagent`是使用`gevent`.
+* ####gevent的调度流程：
+    要想理解`gevent`,首先要理解`gevent`的调度流程.`gevent`中有一个`hub`的概念,也就是下图的`MainThread`,用于调度所有其它的`greenlet`实例(下图`Coroutine`).
+
+    其实`hub`也是一个`greenlet`,只不过特殊一些.
+
+    看下图我们会发现每次从`hub`切换到一个`greenlet`后,都会回到`hub`,这就是`gevent`的关键.
+
+    注意:`gevent`中并没有`greenlet`链的说法,所有都是向主循环注册`greenlet.switch`方法,主循环在合适的时机切换回来.
