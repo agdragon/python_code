@@ -15,6 +15,7 @@ gevent是一个基于协程的python网络库。
     * [gevent概述](#user-content-gevent概述)
     * [gevent的调度流程](#user-content-gevent的调度流程)
     * [gevent之spawn](#user-content-gevent之spawn)
+    * [gevent之sleep](#user-content-gevent之sleep)
     * [gevent之join](#user-content-gevent之join)
 
 
@@ -140,7 +141,38 @@ gevent是一个基于协程的python网络库。
     ![gevent执行流程](http://img2.ph.126.net/J6-XDpFxBjpsaThULXepzg==/2872733612409913241.jpg)
 
 * ####gevent之spawn：
-    pass
+    `gevent.spawn`其实就是`Greenlet.spawn(foo)`,所以`gevent.spawn`就是创建一个`greenlet`,并将该`greenlet`的`switch()`加入`hub`主循环回调.效果类似于`gevent.Greenlet(foo).start`
+
+* ####gevent之sleep：
+    代码:
+
+        #!/usr/bin/python
+        #coding=utf-8
+
+        import gevent
+
+        def foo():
+            print ("Running in foo")
+            gevent.sleep(0)
+            print ("Running in foo again")
+
+        def bar():
+            print ("Running in bar")
+            gevent.sleep(0)
+            print ("Running in bar again")
+
+        if __name__ == '__main__':
+            gevent.joinall([
+                    gevent.spawn(foo),
+                    gevent.spawn(bar)
+                ])
+
+    结果:
+
+        Test 0 is running...
+        Test 1 is running...
+        Test 0 is done!
+        Test 1 is done!
 
 * ####gevent之join：
     pass
