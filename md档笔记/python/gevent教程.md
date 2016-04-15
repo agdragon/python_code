@@ -11,6 +11,7 @@ gevent是一个基于协程的python网络库。
     * [父greenlet](#user-content-父greenlet)
     * [greenlet实例化](#user-content-greenlet实例化)
     * [在greenlets间切换](#user-content-在greenlets间切换)
+    * [垂死的greenlet](#user-content-垂死的greenlet)
 
 
 <br>
@@ -83,4 +84,39 @@ gevent是一个基于协程的python网络库。
 
 
 * ####在greenlets间切换：
-    `greenlet`之间的切换发生在`greenlet`的`switch` 方法被调用时,这会让执行点跳转到`greenlet`的`switch`被调用处。或者在`greenlet`死掉时，跳转到父`greenlet`那里去。在切换时，一个对象或异常被发送到目标`greenlet`。这可以作为两个`greenlet`之间传递信息的方便方式。
+    `greenlet`之间的切换发生在`greenlet`的`switch()` 方法被调用时,这会让执行点跳转到`greenlet`的`switch()`被调用处.或者在`greenlet`死掉时,跳转到父`greenlet`那里去.在切换时,一个对象或异常被发送到目标`greenlet`.这可以作为两个`greenlet`之间传递信息的方便方式.
+
+    例如:
+
+        #!/usr/bin/python
+        #coding=utf-8
+
+        from greenlet import greenlet
+
+        def test1(x,y):
+            z=gr2.switch(x+y)
+            print z
+
+        def test2(u):
+            print u
+            gr1.switch(42)
+
+        gr1=greenlet(test1)
+        gr2=greenlet(test2)
+        gr1.switch("hello"," world")
+
+    结果:
+
+        hello world
+        42
+
+    注意:
+
+        test1() 和 test2() 的参数并不是在 greenlet 创建时指定的，而是在第一次切换到这里时传递的。
+
+* ####垂死的greenlet：
+    如果一个`greenlet`的`run()`结束了,他会返回值到父`greenlet`.如果`run()`是异常终止的，异常会波及到父`greenlet`(除非是`greenlet.GreenletExit`异常,这种情况下异常会被捕捉并返回到父`greenlet`).
+
+    除了上面的情况外,目标`greenlet`会接收到发送来的对象作为`switch()`的返回值.虽然`switch()`并不会立即返回,但是它仍然会在未来某一点上返回,当其他`greenlet`切换回来时.当这发生时,执行点恢复到`switch()`之后,而`switch()` 返回刚才调用者发送来的对象.这意味着`x=g.switch(y)` 会发送对象`y`到`g`,然后等着一个不知道是谁发来的对象,并在这里返回给`x`。
+
+    注意，任何尝试切换到死掉的`greenlet`的行为都会切换到死掉`greenlet`的父`greenlet`,或者父的父,等等。最终的父就是`main greenlet`,永远不会死掉的。
