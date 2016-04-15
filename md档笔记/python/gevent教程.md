@@ -14,7 +14,8 @@ gevent是一个基于协程的python网络库。
     * [垂死的greenlet](#user-content-垂死的greenlet)
     * [gevent概述](#user-content-gevent概述)
     * [gevent的调度流程](#user-content-gevent的调度流程)
-    
+    * [gevent之spawn](#user-content-gevent之spawn)
+    * [gevent之join](#user-content-gevent之join)
 
 
 <br>
@@ -124,7 +125,9 @@ gevent是一个基于协程的python网络库。
     注意，任何尝试切换到死掉的`greenlet`的行为都会切换到死掉`greenlet`的父`greenlet`,或者父的父,等等。最终的父就是`main greenlet`,永远不会死掉的
 
 * ####gevent概述：
-    `gevent`是一个高性能网络库,底层是`libevent`,`1.0`版本之后是`libev`,核心是`greenlet`.`gevent`和`eventlet`是亲近,唯一不同的是`eventlet`是自己实现的事件驱动,而`gevent`是使用`libev`.两者都有广泛的应用,如`openstack`底层网络通信使用`eventlet`,`goagent`是使用`gevent`.
+
+    其实`gevent`是一个高性能网络库,底层是`libevent`,`1.0`版本之后是`libev`,核心是`greenlet`.`gevent`和`eventlet`是亲近,唯一不同的是`eventlet`是自己实现的事件驱动,而`gevent`是使用`libev`.两者都有广泛的应用,如`openstack`底层网络通信使用`eventlet`,`goagent`是使用`gevent`.
+
 * ####gevent的调度流程：
     要想理解`gevent`,首先要理解`gevent`的调度流程.`gevent`中有一个`hub`的概念,也就是下图的`MainThread`,用于调度所有其它的`greenlet`实例(下图`Coroutine`).
 
@@ -135,3 +138,9 @@ gevent是一个基于协程的python网络库。
     注意:`gevent`中并没有`greenlet`链的说法,所有都是向主循环注册`greenlet.switch`方法,主循环在合适的时机切换回来.
 
     ![gevent执行流程](http://img2.ph.126.net/J6-XDpFxBjpsaThULXepzg==/2872733612409913241.jpg)
+
+* ####gevent之spawn：
+    pass
+
+* ####gevent之join：
+    pass
