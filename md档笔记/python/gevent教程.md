@@ -20,7 +20,9 @@ gevent是一个基于协程的python网络库。
     当你创建一个`greenlet`时，它得到一个开始时为空的栈；当你第一次切换到它时，它会执行指定的函数，这 个函数可能会调用其他函数、切换跳出`greenlet`等等。当最终栈底的函数执行结束出栈时，这个`greenlet`的栈又变成空的，这个`greenlet`也就死掉了。`greenlet`也会因为一个未捕捉的异常死掉。
     
     代码示例:
+
         ```
+            
             #!/usr/bin/python
             #coding=utf-8
 
