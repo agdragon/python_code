@@ -8,7 +8,7 @@ gevent是一个基于协程的python网络库。
 
 * 目录：
     * [greenlet概述](#user-content-greenlet概述)
-    * [装饰器property](#user-content-装饰器property)
+    * [父greenlet](#user-content-父greenlet)
     * [结论](#user-content-结论)
 
 <br>
@@ -50,70 +50,20 @@ gevent是一个基于协程的python网络库。
 
     代码以及结果分析:
 
-        1: 最后一行首先跳转到`greenlet`之`gr1`执行其指定的函数`test1`,这里 `test1`没有参数，因此`gr1.switch()`也不需要指定参数。
+        最后一行首先跳转到`greenlet`之`gr1`执行其指定的函数`test1`,这里 `test1`没有参数，因此`gr1.switch()`也不需要指定参数。
 
-        2: `test1`打印`12`,然后跳转到`test2`,打印`56`,然后跳转回`test1`,打印`34`,最后  `test1`结束执行,`gr1`死掉。这时执行会回到最初的`gr1.switch()`调用。
+        `test1`打印`12`,然后跳转到`test2`,打印`56`,然后跳转回`test1`,打印`34`,最后  `test1`结束执行,`gr1`死掉。这时执行会回到最初的`gr1.switch()`调用。
 
-        3: 注意:`78`是不会被打印的。
+        注意:`78`是不会被打印的。
 
 
+
+* ####父greenlet：
+    现在看看一个`greenlet`结束时执行点去哪里。每个`greenlet`拥有一个父`greenlet`。每个`greenlet`最初在其父`greenlet`中创建(不过可以在任何时候改变)。当子`greenlet`结束时,执行位置从父`greenlet`那里继续。这样,`greenlets`之间就被组织成一棵树,顶级的代码并不在用户创建的`greenlet`中运行,而是运行在一个主`greenlet`中,也就是所有`greenlet`关系图的树根。
     
-
-
-
-* ####装饰器property：
-    还记得装饰器`(decorator)`可以给函数动态加上功能吗？对于类的方法，装饰器一样起作用。`Python`内置的`@property`装饰器就是负责把一个方法变成属性调用的：
-
-        ```
-            class Student(object):
-                @property
-                def score(self):
-                    return self._score
-
-                @score.setter
-                def score(self, value):
-                    if not isinstance(value, int):
-                        raise ValueError('score must be an integer!')
-                    if value < 0 or value > 100:
-                        raise ValueError('score must between 0 ~ 100!')
-                    self._score = value
-        ```
-
-    `@property`的实现比较复杂，我们先考察如何使用。把一个`getter`方法变成属性，只需要加上`@property`就可以了，此时，`@property`本身又创建了另一个装饰器`@score.setter`，负责把一个`setter`方法变成属性赋值，于是，我们就拥有一个可控的属性操作：
-
-        ```
-            s = Student()
-            s.score = 60 # OK，实际转化为s.set_score(60)
-            s.score # OK，实际转化为s.get_score()
-            
-            60
-            
-            s.score = 9999
-            Traceback (most recent call last):
-              ...
-            ValueError: score must between 0 ~ 100!
-        ```
-
-    注意到这个神奇的`@property`，我们在对实例属性操作的时候，就知道该属性很可能不是直接暴露的，而是通过getter和setter方法来实现的。
-
-    还可以定义只读属性，只定义`getter`方法，不定义`setter`方法就是一个只读属性：
-
-        ```
-            class Student(object):
-                @property
-                def birth(self):
-                    return self._birth
-
-                @birth.setter
-                def birth(self, value):
-                    self._birth = value
-
-                @property
-                def age(self):
-                    return 2014 - self._birth
-        ```
-        
-    上面的`birth`是可读写属性，而`age`就是一个只读属性，因为`age`可以根据`birth`和当前时间计算出来。
+    在上面的例子中,`gr1`和`gr2` 都把主`greenlet`作为父`greenlet`。任何一个死掉，执行点都会回到主`greenlet`。
+    
+    未捕获的异常会传递给父`greenlet`。如果上面的`test2`包含一个打印错误,会生成一个`NameError`而杀死`gr2`,然后异常被传递回主`greenlet`。`traceback`会显示`test2`而不是`test1`。记住,切换不是调用，而是执行点在并行的栈容器间交换，而父`greenlet`定义了这些栈之间的先后关系。
 
 
 * ####结论：
