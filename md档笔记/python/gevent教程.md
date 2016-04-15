@@ -12,6 +12,8 @@ gevent是一个基于协程的python网络库。
     * [greenlet实例化](#user-content-greenlet实例化)
     * [在greenlets间切换](#user-content-在greenlets间切换)
     * [垂死的greenlet](#user-content-垂死的greenlet)
+    * [greenlet之switch](#user-content-greenlet之switch)
+
     * [gevent概述](#user-content-gevent概述)
     * [gevent之调度流程](#user-content-gevent之调度流程)
     * [gevent之hub](#user-content-gevent之hub)
@@ -126,6 +128,12 @@ gevent是一个基于协程的python网络库。
 
     注意，任何尝试切换到死掉的`greenlet`的行为都会切换到死掉`greenlet`的父`greenlet`,或者父的父,等等。最终的父就是`main greenlet`,永远不会死掉的
 
+* ####greenlet之switch：
+    `switch`的作用:切换到这个`greenlet`协程中，并执行该协程的任务.
+
+    1:如果这个协程的任务并没有被激活过，则执行`self.run`函数来执行这个协程的任务
+    2:如果已经被激活,而且正在运行这个协程的任务(即在执行`run`函数的时候切到了另一个协程中),调用`switch`函数将回到这个协程的状态(即上次运行的地点)
+
 * ####gevent概述：
 
     其实`gevent`是一个高性能网络库,底层是`libevent`,`1.0`版本之后是`libev`,核心是`greenlet`.`gevent`和`eventlet`是亲近,唯一不同的是`eventlet`是自己实现的事件驱动,而`gevent`是使用`libev`.两者都有广泛的应用,如`openstack`底层网络通信使用`eventlet`,`goagent`是使用`gevent`.
@@ -142,11 +150,13 @@ gevent是一个基于协程的python网络库。
     ![gevent执行流程](http://img2.ph.126.net/J6-XDpFxBjpsaThULXepzg==/2872733612409913241.jpg)
 
 * ####gevent之hub：
+
     `gevent`中有一个`hub`的概念,也就是上图的`MainThread`,用于调度所有其它的`greenlet`实例(上图`Coroutine`).
 
     其实`hub`也是一个`greenlet`,只不过特殊一些.hub即是主协程.
 
 * ####gevent之spawn：
+
     `gevent.spawn`其实就是`Greenlet.spawn(foo)`,所以`gevent.spawn`就是创建一个`greenlet`,并将该`greenlet`的`switch()`加入`hub`主循环回调.效果类似于`gevent.Greenlet(foo).start`
 
 * ####gevent之sleep：
@@ -184,4 +194,25 @@ gevent是一个基于协程的python网络库。
         `sleep`函数能让`gevent`切换协程,进行异步操作.
 
 * ####gevent之join：
-    pass
+    首先看一段代码:
+
+        #!/usr/bin/python
+        #coding=utf-8
+
+        import gevent
+
+        def test1(id):
+            print(id)
+            gevent.sleep(0)
+            print(id, 'is done!')
+
+        t = gevent.spawn(test1, 't')
+        t1 = gevent.spawn(test1, 't1')
+        t.join()
+
+    代码运行结果:
+
+        t
+        t1
+        ('t', 'is done!')
+        ('t1', 'is done!')
