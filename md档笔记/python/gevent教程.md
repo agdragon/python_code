@@ -13,7 +13,6 @@ gevent是一个基于协程的python网络库。
     * [在greenlets间切换](#user-content-在greenlets间切换)
     * [垂死的greenlet](#user-content-垂死的greenlet)
     * [greenlet之switch](#user-content-greenlet之switch)
-
     * [gevent概述](#user-content-gevent概述)
     * [gevent之调度流程](#user-content-gevent之调度流程)
     * [gevent之hub](#user-content-gevent之hub)
