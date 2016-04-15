@@ -69,6 +69,12 @@ gevent是一个基于协程的python网络库。
 * ####greenlet实例化：
     `greenlet(run=None, parent=None)`:
 
-    创建一个`greenlet`对象,不执行。`run`是这个`greenlet`要执行的回调函数,而`parent`是父`greenlet`,缺省为当前`greenlet`。
+        创建一个`greenlet`对象,不执行。`run`是这个`greenlet`要执行的回调函数,而`parent`是父`greenlet`,缺省为当前`greenlet`。
 
+    `greenlet.getcurrent()`:
 
+        返回当前`greenlet`,也就是谁在调用这个函数。
+
+    `greenlet.GreenletExit`:
+
+        这个特定的异常不会波及到父`greenlet`,它用于干掉一个`greenlet`。
