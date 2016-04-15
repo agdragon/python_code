@@ -10,6 +10,8 @@ gevent是一个基于协程的python网络库。
     * [greenlet概述](#user-content-greenlet概述)
     * [父greenlet](#user-content-父greenlet)
     * [greenlet实例化](#user-content-greenlet实例化)
+    * [在greenlets间切换](#user-content-在greenlets间切换)
+
 
 <br>
 
@@ -78,3 +80,7 @@ gevent是一个基于协程的python网络库。
     `greenlet.GreenletExit`:
 
         这个特定的异常不会波及到父`greenlet`,它用于干掉一个`greenlet`。
+
+
+* ####在greenlets间切换：
+    `greenlet`之间的切换发生在`greenlet`的`switch` 方法被调用时,这会让执行点跳转到`greenlet`的`switch`被调用处。或者在`greenlet`死掉时，跳转到父`greenlet`那里去。在切换时，一个对象或异常被发送到目标`greenlet`。这可以作为两个`greenlet`之间传递信息的方便方式。
