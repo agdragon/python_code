@@ -10,4 +10,6 @@ g1 = gevent.spawn(talk, 'bar')
 
 print type(g1)
 
+print getcurrent()
+
 gevent.sleep(0)
