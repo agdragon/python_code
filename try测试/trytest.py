@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 try:
-	pass
+	raise 
 except Exception, e:
-	raise
-else:
 	print "aaaaaaaaaaaaaaaaa"
-finally:
+else:
 	print "bbbbbbbbbbbbbbbbb"
+finally:
+	print "cccccccccccccccccc"
