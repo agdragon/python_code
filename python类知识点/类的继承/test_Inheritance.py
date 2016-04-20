@@ -33,3 +33,4 @@ class B(A):
 
 b = B()
 b.test()
+b.test_1()
