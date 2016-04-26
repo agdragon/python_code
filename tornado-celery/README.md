@@ -1,55 +1,4 @@
-tornado-celery
-==============
-
-tornado-celery is a non-blocking Celery client for Tornado web framework
-
-
-Hello, world
-------------
-
-Here is a simple "Hello, world" example web app for Tornado::
-
-    import tornado.ioloop
-    import tornado.web
-    from tornado.gen import coroutine
-    
-    from tasks import test
-    import torncelery
-    
-    
-    class MainHandler(tornado.web.RequestHandler):
-        @coroutine
-        def get(self):
-            result = yield torncelery.async(test, "hello world", callback=self.test)
-            # self.write("%s" % result )
-
-        def test(self, result):
-            print "result: %s" % result
-            self.write("%s" % result )
-
-
-    application = tornado.web.Application([
-        (r"/", MainHandler),
-    ])
-
-    if __name__ == "__main__":
-        application.listen(8888)
-        tornado.ioloop.IOLoop.instance().start()
-
-Here is tasks.py::
-
-    from celery import Celery
-    import time 
-
-    celery = Celery('tasks', backend='redis://localhost', broker='amqp://')
-
-
-    @celery.task
-    def test(strs):
-        return strs
-
-
-run 
+启动测试程序:
 ---------------
 
 start a worker:
@@ -60,3 +9,12 @@ start a worker:
         'export C_FORCE_ROOT="true" '
 
 and start tornado server.    
+    python test.py
+
+
+该模块的核心思想:
+---------------
+
+    1：判断是否需要执行回调，如果需要执行回调，先把回调函数加future的回调函数列表中。
+    2：调用celery的delay函数
+    3：等待celery执行的结果。同时将处理等待celery执行的结果的函数通过add_callback加到IOLoop.instance中去。
