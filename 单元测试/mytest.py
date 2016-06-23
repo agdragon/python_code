@@ -8,7 +8,7 @@ class mytest(unittest.TestCase):
     
     ##初始化工作
     def setUp(self):
-        self.tclass = myclass.myclass()   ##实例化了被测试模块中的类
+        self.tclass = myclass.myclass()   ##定义一个类对象
     
     #退出清理工作
     def tearDown(self):
