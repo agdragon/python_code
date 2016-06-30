@@ -16,4 +16,8 @@ user = User()
 d = {}
 d.update(user.__dict__)
 
-print json.dumps(d)
+a = json.dumps(d)
+print a
+
+b = json.loads(a)
+print b
