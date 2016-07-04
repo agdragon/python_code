@@ -1,4 +1,4 @@
-﻿#Python中threading.local方法
+#Python中threading.local方法
 
 ###概述:
 `threading.local()`这个方法的特点用来保存一个全局变量，但是这个全局变量只有在当前线程才能访问
