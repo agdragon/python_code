@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 
-client = MongoClient()
+client = MongoClient('mongodb://localhost:27017/')
 db = client.test
 
 data = {
@@ -44,4 +44,5 @@ def get_data():
         print "\n"
 
 if __name__ == '__main__':
-	get_data()
+    my_inset(data)
+	# get_data()
