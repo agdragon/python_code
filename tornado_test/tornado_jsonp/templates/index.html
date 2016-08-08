@@ -7,7 +7,7 @@
           $.getJSON('http://127.0.0.1:8081/jsonp/helloword?jsonp=?', function(data) {
               $('#get-console').html(data['josnp-get']);
           });
-          $.post("http://www.server.com:8081/jsonp/helloword?jsonp=?", function(data){
+          $.post("http://127.0.0.1:8081/jsonp/helloword?jsonp=?", function(data){
              $('#post-console').html(data['josnp-post']);
            }, 'json');
       });

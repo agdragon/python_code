@@ -13,17 +13,13 @@ class A():
 		self.arg = arg
 
 	def __call__(self,arg):
-		# print "*" * 10
-		# print arg
-		# print "*" * 10
-
 		self.global_list.append((self.arg, arg))
 
 		return arg
 
 	@classmethod
-    def get_global_list(cls):
-        return cls.global_list
+	def get_global_list(cls):
+		return cls.global_list
 
 
 @A("xds")
@@ -31,7 +27,12 @@ class B():
 	def __init__(self):
 		print "B.............."
 
-		
+
+@A("xds")
+class C():
+	def __init__(self):
+		print "C.............."
+
 if __name__ == '__main__':
 	b = B()	
 	# a = A()

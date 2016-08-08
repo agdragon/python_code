@@ -3,3 +3,5 @@
 一个窗口中显示多个文件：alt+shift+2
 
 Python自动补全库: Jedi
+
+python静态语法检测：SublimeLinter-pyflakes
